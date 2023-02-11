@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="sidenav">
+  <a href="#home">Home</a>
+  <a href="#programming">Programming</a>
+  <a href="{{ url_for('opengles3') }}">OpenGL ES 3.0</a>
+  <a href="#gcp">GCP</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<div class="main">
+  <h1>Notes for OpenGL ES 3.0</h1>
+
+  <p>OpenGL ES requires a drawing surface and a context. EGL is usually used for providing those two.
+    EGL is a platform independent API provided by Khronos Group.
+  </p>
+  <p>OpenGL ES is a programmable pipeline. It requires atleast one Vertex Shader and one fragment Shader</p>
+
+  <p>The verted Shader should provide position values to the gl_Position variable which is passed down the rendering pipeline</p>
+  <p> Steps involved are  
+    1. The shader code is written. (either inline or separate file is create on the fly)
+    2. The shader program object is created. The function glCreateShader(GLenum shaderType) is used. The shaderType must be one of GL_VERTEX_SHADER or GL_FRAGMENT_SHADER.
+    The function creates a empty shaderObject and return a non zero value (GLunit) by which it can be referenced.
+    3. The shader code created in the first step is loaded into the object created in the second step.
+        void glShaderSource(GLuint shader,GLsizei count,const GLchar **string,const GLint *length);
+
+    4. The shader program is compiled and the compiled status can be checked for any error message.
+
+    The above step is repeated for both vertex and fragment shader.
+
+  </p>
+</div>  
+
+</body>
+</html> 
