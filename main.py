@@ -6,7 +6,7 @@ def home():
    return render_template('home.html')
 
 @app.route('/opengles3')
-def home():
+def opengles3():
    return render_template('opengles3.html')
 
 
