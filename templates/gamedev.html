@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="sidenav">
+  <a href="#home">Home</a>
+  <a href="#programming">Programming</a>
+  <a href="{{ url_for('opengles3') }}">OpenGL ES 3.0</a>
+  <a href="#gcp">GCP</a>
+  <a href="#contact">Contact</a>
+  <a href="{{ url_for('questions') }}">Questions</a>
+</div>
+
+<div class="main">
+  <h1>Questions</h1>
+  <p>what is rigging ?</p>
+  <p>what is skinning ?</p>
+  
+</div>  
+
+</body>
+</html> 

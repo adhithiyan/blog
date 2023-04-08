@@ -1,158 +1,239 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
 
-<body>
+  <body>
+    <header class="common-header">
+      <nav class="common-nav">
+        <a href="#home">Home</a>
+        <a href="#programming">Programming</a>
+        <a href="{{ url_for('opengles3') }}">OpenGL ES 3.0</a>
+        <a href="#gcp">GCP</a>
+        <a href="#contact">Contact</a>
+        <a href="{{ url_for('questions') }}">Questions</a>
+      </nav>
+    </header>
 
-<div class="sidenav">
-  <a href="#home">Home</a>
-  <a href="#programming">Programming</a>
-  <a href="{{ url_for('opengles3') }}">OpenGL ES 3.0</a>
-  <a href="#gcp">GCP</a>
-  <a href="#contact">Contact</a>
-  <a href="{{ url_for('questions') }}">Questions</a>
-</div>
+    <article class="main-article">
+      <h1>Notes for OpenGL ES 3.0</h1>
 
-<div class="main">
-  <h1>Notes for OpenGL ES 3.0</h1>
-
-  <p>OpenGL ES requires a drawing surface and a context. EGL is usually used for providing those two.
-    EGL is a platform independent API provided by Khronos Group.
-  </p>
-  <p>OpenGL ES is a programmable pipeline. It requires atleast one Vertex Shader and one fragment Shader</p>
-
-  <p>The verted Shader should provide position values to the gl_Position variable which is passed down the rendering pipeline</p>
-  <p> Steps involved are  
-    1. The shader code is written. (either inline or separate file is create on the fly)
-    2. The shader program object is created. The function glCreateShader(GLenum shaderType) is used. The shaderType must be one of GL_VERTEX_SHADER or GL_FRAGMENT_SHADER.
-    The function creates a empty shaderObject and return a non zero value (GLunit) by which it can be referenced.
-    3. The shader code created in the first step is loaded into the object created in the second step.
-        void glShaderSource(GLuint shader,GLsizei count,const GLchar **string,const GLint *length);
-
-    4. The shader program is compiled and the compiled status can be checked for any error message.
-
-    The above step is repeated for both vertex and fragment shader.
-    </p>
-
-    <h1>OpenGL ES Shading Language</h1>
-    <p> The first line declares the shader version used in the shader program. The compiler checks the shader program
-      against the declared version. For version 3.0, it is defined as:
-      #version 300 es
-    </p>
-    <h2>Variables and Variable Types</h2>
-    <p>In Computer Graphics, vectors and matrices are the two fundamental datatypes that form the basis of transformation</p>
-    <p>Variable must be declared with a type. </p>
-    <p>variables can be assigned to or operated on other variables of the same type.</p>
-    <p>GLSL does not allow implicit type conversion.</p>
-    <p>But is provides type constructor that can be used to initialise variables and in type conversion.</p>
-    <p>In case of vector constructor, the values are assigned based on below rules:</p>
-    <p>1. If only one scalar argument is given, the same value is assigned to all values of the vector</p>
-    <p>2. If multiple scalar / vector arguments are given, values are assigned from left to right. There must
-      be atleast as many components in the arguments as in the vector 
-    </p>
-
-    <p>For matrix construction, the following rules are applied.
-      1. If only one scalar argument is given, it is placed along the diagonal to form the identity matrix.
-      2. Basically, matrix can be constructed by any combination of vectors and scalars as long as they provide
-      values for all the components of the matrix. Matrix are stored in column major order. It means the arguments
-      will be consumed to fill the matrix by column.
-    </p>
-
-    <p>The components of vector and matrix can be accessed by either dot notation or through array subscripting.</p>
-
-    <h2>Constants</h2> 
-    <p>Constant variable are those who values do not change in the shader. const qualiter is used to 
-      declare them. They must be initialised at declaration time.
-    </p>
-
-    <h2>Structures and Arrays</h2>
-    <p>Structures are used to group variable similar to the structs in C. The struct type name
-      is used as constructor to initialize the struct variable. The components are accessed using dot notation. </p>
-    <p>Arrays are based on 0 index. arrays are initialized using array constructor.</p>
-    <p> float floatArray[2];
-        floatArray = float[](1.0,2.0,3.0,4.0);
-    </p>
-    <h2>Structures and Arrays</h2>    
-    <h2>Functions</h2>    
-    <p>The functions cannot be recursive. This is to support GPU that does not have a stack.</p>
-    <p>If a function is called before defined, a prototype must be declared (much like C).</p>
-    <p>The arguments can have the following qualifiers :</p>
-    <p> in (Default)</p>
-    <p> out </p>
-    <p> inout </p>
-    <p> GLSL also provides built-in functios.</p>
-    <h2>Control Flow Statements</h2>    
-      if-then-else statements, while, do-while loops are fully supported. 
-      OpenGL ES 2.0 supported only the loops than can be unrolled by the compiler. 
-
-      But loops come with performance implication. A good rule of thumb is to limit the number
-      of divergent flow control/loop iterations across vertices/fragments.
-
-      <h2>Uniforms</h2>   
-
-      <h2>Vertex/Fragment Shaders input/output</h2>   
-      <p>Vertext Input variables are also called vertex attribute variables. 
-        They are used to specify per-vertex inputs to the vertex shader and are specified with the in keyword.
-        They store data such as positions,colors,normals and texture coordinates.
-        An optional layout qualifier can be used to specify the index of the vertex attribute.
-        if not specifed, the linker will automatically assign location for the vertex inputs.
+      <p>
+        OpenGL ES requires a drawing surface and a context. EGL is usually used
+        for providing those two. EGL is a platform independent API provided by
+        Khronos Group.
+      </p>
+      <p>
+        OpenGL ES 3.0 is a programmable pipeline. It requires atleast one Vertex
+        Shader and one fragment Shader
       </p>
 
-      <p>The output variables from vertex shader are specified with the out keyword. 
-        Each vertex shader places the values it wants to pass to fragment shader in one or more out variables.
-        These variables will then be declared in fragment shared as in variables (with matching types).       
+      <p>
+        The verted Shader should provide position values to the gl_Position
+        variable which is passed down the rendering pipeline
+      </p>
+      <p>Steps involved are</p>
+      <ol>
+        <li>
+          The shader code is written. (either inline or separate file is create
+          on the fly)
+        </li>
+        <li>
+          The shader program object is created using the function.
+          <pre>glCreateShader(GLenum shaderType)</pre>
+          The <em>shaderType</em> must be one of GL_VERTEX_SHADER or
+          GL_FRAGMENT_SHADER. The function creates a empty shaderObject and
+          return a non zero value (GLunit) by which it can be referenced.
+        </li>
+        <li>
+          The shader code created in the first step is loaded into the object
+          created in the second step. void glShaderSource(GLuint shader,GLsizei
+          count,const GLchar **string,const GLint *length);
+        </li>
+        <li>
+          The shader program is compiled and the compiled status can be checked
+          for any error message.
+        </li>
+      </ol>
+      <p>The above step is repeated for both vertex and fragment shader.</p>
+
+      <h1>OpenGL ES Shading Language</h1>
+      <p>
+        The first line declares the shader version used in the shader program.
+        The compiler checks the shader program against the declared version. For
+        version 3.0, it is defined as: #version 300 es
+      </p>
+      <h2>Variables and Variable Types</h2>
+      <p>
+        In Computer Graphics, vectors and matrices are the two fundamental
+        datatypes that form the basis of transformation
+      </p>
+      <p>Variable must be declared with a type.</p>
+      <p>
+        variables can be assigned to or operated on other variables of the same
+        type.
+      </p>
+      <p>GLSL does not allow implicit type conversion.</p>
+      <p>
+        But is provides type constructor that can be used to initialise
+        variables and in type conversion.
+      </p>
+      <p>
+        In case of vector constructor, the values are assigned based on below
+        rules:
+      </p>
+      <p>
+        1. If only one scalar argument is given, the same value is assigned to
+        all values of the vector
+      </p>
+      <p>
+        2. If multiple scalar / vector arguments are given, values are assigned
+        from left to right. There must be atleast as many components in the
+        arguments as in the vector
       </p>
 
-      <p>The fragment shader output one or more color. typically, fragment shader will have only one 
-        output variable. That variable value will be output color that is passed on to the per-fragment
-          operation portions of the pipeline.
+      <p>
+        For matrix construction, the following rules are applied. 1. If only one
+        scalar argument is given, it is placed along the diagonal to form the
+        identity matrix. 2. Basically, matrix can be constructed by any
+        combination of vectors and scalars as long as they provide values for
+        all the components of the matrix. Matrix are stored in column major
+        order. It means the arguments will be consumed to fill the matrix by
+        column.
       </p>
-</div>  
-<div>
-<h2>Specifying vertext attributes</h2>
-<p>the hardware limits the number of vertex attributes that can be used. Open GL ES 3.0 must support a minimum of 
-  16 vertex attributes.
-  glGetIntegerv(GL_MAX_VERTEX_ATTRIBS,&maxVertexAttribs); -> command to get the maximum vertex attributes supported
-  by the implementation.
-</p>
-<p>vertext attribute can be specified for each vertex using vertex array
-  or a constant value can be used for all vertices.
-The glVertexAttrib* commands are used to load the generic vertex attribute at the specified index.
-</p>
 
-<h2>Vertex Array Data</h2>
-<p>Two methods are commonly used to storing vertex array data </p>
-<p>Array of Structures - The structure represents all attributes of a vertex. Single Buffer is used to
-  store vertex attributes together.
-  Structure of Arrays - 
-</p>
+      <p>
+        The components of vector and matrix can be accessed by either dot
+        notation or through array subscripting.
+      </p>
 
-<h2>Primitive Assembly and Rasterization</h2>
-<p>The following primitives can be drawn in OpenGL ES 3.0
-  1. Triangles
-  2. Lines
-  3. Point Sprites
-</p>
-<h3>Traingles</h3>
-<p>GL_TRIANGLES - used to draw individual triangles. total of n/3 triangles are drawn.</p>
-<p>GL_TRAIANGLE_STRIP - used to draw connected triangles. total of (n-2) triangles are drawn.</p>
-<p>GL_TRAIANGLE_FAN - used to draw connected triangles as well. total of (n-2) triangles are drawn.</p>
+      <h2>Constants</h2>
+      <p>
+        Constant variable are those who values do not change in the shader.
+        const qualiter is used to declare them. They must be initialised at
+        declaration time.
+      </p>
 
-<h1>Draw Calls</h1>
-<p> The different draw calls available are :</p>
-<p>glDrawArrays,glDrawElements,glDrawRangeElements</p>
-<p>In all draw calls, the vertex data details are not specified. This is because the vertex data are bounded(or enabled)
-  before the draw call.
-</p>
+      <h2>Structures and Arrays</h2>
+      <p>
+        Structures are used to group variable similar to the structs in C. The
+        struct type name is used as constructor to initialize the struct
+        variable. The components are accessed using dot notation.
+      </p>
+      <p>
+        Arrays are based on 0 index. arrays are initialized using array
+        constructor.
+      </p>
+      <p>float floatArray[2]; floatArray = float[](1.0,2.0,3.0,4.0);</p>
+      <h2>Structures and Arrays</h2>
+      <h2>Functions</h2>
+      <p>
+        The functions cannot be recursive. This is to support GPU that does not
+        have a stack.
+      </p>
+      <p>
+        If a function is called before defined, a prototype must be declared
+        (much like C).
+      </p>
+      <p>The arguments can have the following qualifiers :</p>
+      <p>in (Default)</p>
+      <p>out</p>
+      <p>inout</p>
+      <p>GLSL also provides built-in functios.</p>
+      <h2>Control Flow Statements</h2>
+      if-then-else statements, while, do-while loops are fully supported. OpenGL
+      ES 2.0 supported only the loops than can be unrolled by the compiler. But
+      loops come with performance implication. A good rule of thumb is to limit
+      the number of divergent flow control/loop iterations across
+      vertices/fragments.
 
-<h2>Primitive Restart</h2>
-<p>Primitive Restart enables us to draw multiple diconnected primitives in a single draw call.
+      <h2>Uniforms</h2>
 
-</p>
-</div>
+      <h2>Vertex/Fragment Shaders input/output</h2>
+      <p>
+        Vertext Input variables are also called vertex attribute variables. They
+        are used to specify per-vertex inputs to the vertex shader and are
+        specified with the in keyword. They store data such as
+        positions,colors,normals and texture coordinates. An optional layout
+        qualifier can be used to specify the index of the vertex attribute. if
+        not specifed, the linker will automatically assign location for the
+        vertex inputs.
+      </p>
 
-</body>
-</html> 
+      <p>
+        The output variables from vertex shader are specified with the out
+        keyword. Each vertex shader places the values it wants to pass to
+        fragment shader in one or more out variables. These variables will then
+        be declared in fragment shared as in variables (with matching types).
+      </p>
+
+      <p>
+        The fragment shader output one or more color. typically, fragment shader
+        will have only one output variable. That variable value will be output
+        color that is passed on to the per-fragment operation portions of the
+        pipeline.
+      </p>
+      <h2>Specifying vertext attributes</h2>
+      <p>
+        the hardware limits the number of vertex attributes that can be used.
+        Open GL ES 3.0 must support a minimum of 16 vertex attributes.
+        glGetIntegerv(GL_MAX_VERTEX_ATTRIBS,&maxVertexAttribs); -> command to
+        get the maximum vertex attributes supported by the implementation.
+      </p>
+      <p>
+        vertext attribute can be specified for each vertex using vertex array or
+        a constant value can be used for all vertices. The glVertexAttrib*
+        commands are used to load the generic vertex attribute at the specified
+        index.
+      </p>
+
+      <h2>Vertex Array Data</h2>
+      <p>Two methods are commonly used to storing vertex array data</p>
+      <p>
+        Array of Structures - The structure represents all attributes of a
+        vertex. Single Buffer is used to store vertex attributes together.
+        Structure of Arrays -
+      </p>
+
+      <h2>Primitive Assembly and Rasterization</h2>
+      <p>
+        The following primitives can be drawn in OpenGL ES 3.0 1. Triangles 2.
+        Lines 3. Point Sprites
+      </p>
+      <h3>Traingles</h3>
+      <p>
+        GL_TRIANGLES - used to draw individual triangles. total of n/3 triangles
+        are drawn.
+      </p>
+      <p>
+        GL_TRAIANGLE_STRIP - used to draw connected triangles. total of (n-2)
+        triangles are drawn.
+      </p>
+      <p>
+        GL_TRAIANGLE_FAN - used to draw connected triangles as well. total of
+        (n-2) triangles are drawn.
+      </p>
+
+      <h1>Draw Calls</h1>
+      <p>The different draw calls available are :</p>
+      <p>glDrawArrays,glDrawElements,glDrawRangeElements</p>
+      <p>
+        In all draw calls, the vertex data details are not specified. This is
+        because the vertex data are bounded(or enabled) before the draw call.
+      </p>
+
+      <h2>Primitive Restart</h2>
+      <p>
+        Primitive Restart enables us to draw multiple diconnected primitives in
+        a single draw call. A less elegant approach is to use degenerative
+        triangles. primitive restart can be applied only in indexed draw calls.
+      </p>
+    </article>
+  </body>
+</html>

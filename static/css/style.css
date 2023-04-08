@@ -1,41 +1,47 @@
-.pagetitle {
-    color: #800080;
+* {
+  padding: 0;
+  margin: 0;
 }
 
 body {
+  width: 1000px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
   font-family: "Lato", sans-serif;
 }
 
-.sidenav {
-  width: 130px;
-  position: fixed;
-  z-index: 1;
-  top: 20px;
-  left: 10px;
-  background: #eee;
-  overflow-x: hidden;
-  padding: 8px 0;
+.common-header {
+  margin-bottom: 50px;
 }
 
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #2196F3;
-  display: block;
+.common-nav {
+  background-color: red;
+
+  text-align: center; /*centers the content. Here it centers the anchors */
+  padding: 20px;
 }
 
-.sidenav a:hover {
-  color: #064579;
+.common-nav a {
+  margin-right: 10px;
 }
 
-.main {
-  margin-left: 140px; /* Same width as the sidebar + left position in px */
-  font-size: 28px; /* Increased text to enable scrolling */
-  padding: 0px 10px;
+.main-article p {
+  margin-bottom: 5px;
 }
 
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+.main-article h1,
+h2,
+h3 {
+  margin-bottom: 10px;
+}
+
+pre {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+li {
+  margin-left: 20px;
 }
