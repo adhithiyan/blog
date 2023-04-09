@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='/images/favicon.ico') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+    <title>adhithiyan.dev</title>
+</head>
+
+<body>
+    <header class="common-header">
+        <nav class="common-nav">
+            <a href="#home">Home</a>
+            <a href="#programming">Programming</a>
+            <a href="{{ url_for('opengles3') }}">OpenGL ES 3.0</a>
+            <a href="#gcp">GCP</a>
+            <a href="#contact">Contact</a>
+            <a href="{{ url_for('questions') }}">Questions</a>
+        </nav>
+    </header>
+    <div class="container">
+        {% block mainarticle %}{% endblock %}
+        <nav class="in-this-article">
+            <h5 class="title">In This Article</h5>
+            <ul>
+                {% block inthisarticle %}{% endblock %}
+            </ul>
+        </nav>
+    </div>
+</body>
+
+</html>
